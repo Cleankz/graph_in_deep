@@ -68,14 +68,26 @@ class SimpleGraph:
             node_from.Hit = True
             result.append(node_from)
             return result
+        edges = 0
+        for i in range(len(self.m_adjacency[VFrom])):
+            if self.m_adjacency[VFrom][i] == 1 and self.vertex[i].Hit is False:
+                edges += 1
         if self.vertex[VFrom].Hit is False:
             result.append(self.vertex[VFrom])
             node_from = self.vertex[VFrom]
         else:
             node_from = result[0]
-
         if node_from.Hit is False:
             node_from.Hit = True
+        if edges == 0:
+            result.pop(len(result)-1)
+            if len(result) >= 1:
+                node_from = result[len(result)-1]
+            if len(result) == 0:
+                return result
+            for i in range(len(self.vertex)):
+                if self.vertex[i] == node_from:
+                    VFrom = i
 
         if self.IsEdge(VFrom,VTo):
            self.vertex[VTo].Hit = True
@@ -105,12 +117,33 @@ class SimpleGraph:
 # graff.AddVertex(2)
 # graff.AddVertex(3)
 # graff.AddVertex(4)
+# graff.AddEdge(4, 3)
+# graff.AddEdge(2, 3)
+# graff.AddEdge(4, 3)
+# graff.AddEdge(4, 1)
+# graff.AddEdge(0, 2)
+# print(graff.DepthFirstSearch(4, 0))
+
+# graff = SimpleGraph(5)
+# graff.AddVertex(0)
+# graff.AddVertex(1)
+# graff.AddVertex(2)
+# graff.AddVertex(3)
+# graff.AddVertex(4)
 # graff.AddEdge(0, 1)
 # # graff.AddEdge(0, 2)
-# # graff.AddEdge(0, 3)
-# graff.AddEdge(1, 4)
+# graff.AddEdge(0, 3)
+# graff.AddEdge(1, 0)
 # graff.AddEdge(1, 3)
-# # graff.AddEdge(2, 3)
+# graff.AddEdge(1, 4)
+# # graff.AddEdge(2, 0)
+# # graff.AddEdge(2, 4)
+# graff.AddEdge(3, 0)
+# graff.AddEdge(3, 1)
+# # graff.AddEdge(3, 2)
+# graff.AddEdge(3, 3)
 # graff.AddEdge(3, 4)
-# print(graff.DepthFirstSearch(1, 1))
+# graff.AddEdge(4, 1)
+# graff.AddEdge(4, 3)
+# print(graff.DepthFirstSearch(0, 2))
 # print(graff.DepthFirstSearch(3, 0))
