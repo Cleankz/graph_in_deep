@@ -21,7 +21,7 @@ class MyTests(unittest.TestCase):
             b = random.randint(0,4)
             search[i].append(a)
             search[i].append(b)
-            # print(graff.DepthFirstSearch(a,b))
+            print(graff.DepthFirstSearch(a,b))
     def test_DFS(self):
         graff = SimpleGraph(5)
         graff.AddVertex(0)
