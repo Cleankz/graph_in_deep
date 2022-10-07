@@ -56,7 +56,7 @@ class SimpleGraph:
         # удаление ребра между вершинами v1 и v2
         return
 
-    def DepthFirstSearch(self, VFrom, VTo,result = []):
+    def DFirstSearch(self,VFrom, VTo,result):
         if len(self.vertex) == 0:
             return result
         if VFrom >= len(self.vertex) or VTo >= len(self.vertex):
@@ -68,17 +68,20 @@ class SimpleGraph:
             node_from.Hit = True
             result.append(node_from)
             return result
-        edges = 0
-        for i in range(len(self.m_adjacency[VFrom])):
-            if self.m_adjacency[VFrom][i] == 1 and self.vertex[i].Hit is False:
-                edges += 1
+
         if self.vertex[VFrom].Hit is False:
             result.append(self.vertex[VFrom])
             node_from = self.vertex[VFrom]
         else:
             node_from = result[0]
+
         if node_from.Hit is False:
             node_from.Hit = True
+
+        edges = 0
+        for i in range(len(self.m_adjacency[VFrom])):
+            if self.m_adjacency[VFrom][i] == 1 and self.vertex[i].Hit is False:
+                edges += 1
         if edges == 0:
             result.pop(len(result)-1)
             if len(result) >= 1:
@@ -88,17 +91,10 @@ class SimpleGraph:
             for i in range(len(self.vertex)):
                 if self.vertex[i] == node_from:
                     VFrom = i
-
-        if self.IsEdge(VFrom,VTo):
-           self.vertex[VTo].Hit = True
-           result.append(self.vertex[VTo])
-           for i in range(len(self.vertex)):
-               self.vertex[i].Hit = False
-           return result
-        else:
+        if self.IsEdge(VFrom,VTo) is False:
             for i in range(len(self.m_adjacency[VFrom])):
                 if self.m_adjacency[VFrom][i] == 1 and self.vertex[i].Hit is False:
-                    return self.DepthFirstSearch(i, VTo)
+                    return self.DFirstSearch(i, VTo,result)
             result.pop(0)
             if len(result) == 0:
                 for i in range(len(self.vertex)):
@@ -106,11 +102,19 @@ class SimpleGraph:
                 return []
             else:
                 result[0].Hit = True
-                return self.DepthFirstSearch(VFrom, VTo)
-        
-        # узлы задаются позициями в списке vertex
-        # возвращается список узлов -- путь из VFrom в VTo
-        # или [] если пути нету
+                for i in range(len(self.vertex)):
+                    if self.vertex[i] == result[0]:
+                        VFrom = i
+                return self.DFirstSearch(VFrom,VTo,result)
+        if self.IsEdge(VFrom,VTo):
+           self.vertex[VTo].Hit = True
+           result.append(self.vertex[VTo])
+           for i in range(len(self.vertex)):
+               self.vertex[i].Hit = False
+           return result
+    def DepthFirstSearch(self,VFrom, VTo):
+        rezult = self.DFirstSearch(VFrom, VTo,[])
+        return rezult
 # graff = SimpleGraph(5)
 # graff.AddVertex(0)
 # graff.AddVertex(1)
@@ -123,6 +127,8 @@ class SimpleGraph:
 # graff.AddEdge(4, 1)
 # graff.AddEdge(0, 2)
 # print(graff.DepthFirstSearch(4, 0))
+# print(graff.DepthFirstSearch(3, 4))
+# print(graff.DepthFirstSearch(3, 4))
 
 # graff = SimpleGraph(5)
 # graff.AddVertex(0)
