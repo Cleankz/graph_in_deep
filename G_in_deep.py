@@ -153,3 +153,22 @@ class SimpleGraph:
 # graff.AddEdge(4, 3)
 # print(graff.DepthFirstSearch(0, 2))
 # print(graff.DepthFirstSearch(3, 0))
+
+
+
+
+        # a = 0
+        # b = 0
+        # for j in range(len(self.vertex)):
+        #     if j != len(self.vertex)-1:
+        #         if self.vertex[j] == inp_array[j]:
+        #             a = j
+        #         if self.vertex[j] == inp_array[j+1]:
+        #             b = j
+        # if i != len(inp_array)-1:
+        #     if self.IsEdge(a,b) is False:
+        #         inp_array.pop(i)
+        #         i = 0
+        #         return self.clear_way(inp_array,i)
+        # else:
+        #     return inp_array
